@@ -6,6 +6,7 @@ namespace University.BL.Data
 {
     public class UniversityContext : IdentityDbContext<ApplicationUser>
     {
+        private static UniversityContext universityContext = null;
         public UniversityContext() : base("UniversityContext")
         {
 
@@ -18,7 +19,9 @@ namespace University.BL.Data
 
         public static UniversityContext Create()
         {
-            return new UniversityContext();
+            if (universityContext == null)
+                universityContext = new UniversityContext();
+            return universityContext;
         }
     }
 }
