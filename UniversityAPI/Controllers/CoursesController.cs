@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using University.BL.Data;
 using University.BL.DTOs;
+using University.BL.Models;
 using University.BL.Repositories.Implements;
 using University.BL.Services.Implements;
 
@@ -44,5 +45,24 @@ namespace UniversityAPI.Controllers
             return Ok(courseDTO);
 
         }
+        [HttpPost]
+        public async Task<IHttpActionResult> Post(CourseDTO courseDTO) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+            
+            try
+            {
+                var course = mapper.Map<Course>(courseDTO);
+                course = await courseService.Insert(course);
+                return Ok();
+            }
+            catch (Exception ex) { return InternalServerError(ex);         }
+
+            
+            
+        }
+
     }
+
 }

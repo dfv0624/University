@@ -53,7 +53,7 @@ namespace UniversityAPI.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return NotFound();
 
             return Ok();

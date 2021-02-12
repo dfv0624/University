@@ -26,7 +26,5 @@ namespace University.BL.DTOs
             }
         }
 
-        public ICollection<CourseInstructorDTO> CourseInstructors { get; set; }
-        public OfficeAssignmentDTO OfficeAssignment { get; set; }
     }
 }
