@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Threading.Tasks;
 using University.BL.Data;
 
@@ -45,8 +46,8 @@ namespace University.BL.Repositories.Implements
 
         public async Task<TEntity> Update(TEntity entity)
         {
-            universityContext.Entry(entity).State = EntityState.Modified;
-            //universityContext.Set<TEntity>().AddOrUpdate(entity);
+            //universityContext.Entry(entity).State = EntityState.Modified;
+            universityContext.Set<TEntity>().AddOrUpdate(entity);
             await universityContext.SaveChangesAsync();
             return entity;
         }

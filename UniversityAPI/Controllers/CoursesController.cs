@@ -62,7 +62,57 @@ namespace UniversityAPI.Controllers
             
             
         }
+        [HttpPut]
+        public async Task<IHttpActionResult> Put(CourseDTO courseDTO, int id) {
+           
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    }
+            if (courseDTO.CourseID != id)
+                return BadRequest();
+
+            var course= await courseService.GetById(id);
+            if (course == null)
+                return NotFound();
+
+
+            try
+            {
+                course = mapper.Map<Course>(courseDTO);
+                course = await courseService.Update(course);
+                return Ok(course);
+            }
+            catch (Exception ex)
+            {
+
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            var flag = await courseService.GetById(id);
+
+            if (flag == null)
+                return NotFound();
+
+            try
+            {
+                if (!await courseService.DeleteCheckOnEntity(id))
+                    await courseService.Delete(id);
+                else
+                    throw new Exception("Foreign Keys");
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return InternalServerError(ex);
+            }
+
+           
+        }
+        }
 
 }
